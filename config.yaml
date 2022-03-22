@@ -50,7 +50,7 @@ params:
      #safari_pinned_tab: "<link / abs url>"
 
   label:
-    text: "Home"
+    text: "I'm chizuchizu"
       # icon: /apple-touch-icon.png
     iconHeight: 35
 
@@ -71,7 +71,7 @@ params:
 
   # home-info mode
   homeInfoParams:
-    Title: "I'm chizuchizu \U0001F44B"
+    Title: "平和に暮らしたい \U0001F44B"
     Content: "@chizu_potato"
 
   socialIcons:
@@ -110,15 +110,19 @@ params:
     keys: ["title", "permalink", "summary", "content"]
 menu:
   main:
-    - identifier: categories
-      name: categories
-      url: /categories/
+    - identifire: archives
+      name: Archive
+      url: /archives/
       weight: 10
-    - identifier: tags
-      name: tags
-      url: /tags/
+    - identifier: categories
+      name: Categories
+      url: /categories/
       weight: 20
-    - identifier: about
-      name: about
-      url: /about/
+    - identifier: tags
+      name: Tags
+      url: /tags/
       weight: 30
+    - identifier: about
+      name: About Me
+      url: /about/
+      weight: 40
