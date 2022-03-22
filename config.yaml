@@ -72,7 +72,7 @@ params:
   # home-info mode
   homeInfoParams:
     Title: "I'm chizuchizu \U0001F44B"
-    Content: @chizu_potato
+    Content: "@chizu_potato"
 
   socialIcons:
     - name: twitter
