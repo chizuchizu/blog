@@ -1,4 +1,5 @@
-baseURL: http://blog-blue-mu-74.vercel.app
+# baseURL: http://blog-blue-mu-74.vercel.app
+baseURL: https://chizuchizu.com
 title: I'm chizuchizu 
 theme: "PaperMod"
 
