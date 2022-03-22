@@ -3,7 +3,6 @@ title: I'm chizuchizu
 theme: "PaperMod"
 
 paginate: 5
-theme: PaperMod
 
 enableRobotsTXT: true
 buildDrafts: false
