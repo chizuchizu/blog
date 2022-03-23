@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "a.md",
+            "file": "katex.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "a.md",
+                "file": "katex.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,6 +89,7 @@
   },
   "active": "617631c258bc8d58",
   "lastOpenFiles": [
+    "katex.md",
     "a.md",
     "asdf9.png.md",
     "Pasted image 20220322203917.png",
