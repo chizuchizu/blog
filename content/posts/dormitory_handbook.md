@@ -8,7 +8,7 @@ TocOpen: false
 draft: true
 hidemeta: false
 comments: false
-description: "Desc Text."
+description: "新入生のとき，寮で必要なもの，不必要なものの情報が無かったので知り合いに聞きながらまとめました"
 canonicalURL: "https://canonical.url/to/page"
 disableHLJS: true # to disable highlightjs
 disableShare: false
