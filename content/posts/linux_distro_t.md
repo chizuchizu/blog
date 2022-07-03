@@ -5,10 +5,10 @@ date: 2022-07-03T23:52:59+09:00
 author: "chizuchizu"
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 hidemeta: false
 comments: false
-description: "Desc Text."
+description: "Ubuntu, Arch, Gentoo, NetBSDを入れた感想を綴りました．"
 canonicalURL: "https://canonical.url/to/page"
 disableHLJS: true # to disable highlightjs
 disableShare: false
