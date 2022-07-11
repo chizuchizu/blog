@@ -5,7 +5,7 @@ date: 2022-07-11T16:05:07+09:00
 author: "chizuchizu"
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 hidemeta: false
 comments: false
 description: "LIFモデルを解きます。"
