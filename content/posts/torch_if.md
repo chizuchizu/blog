@@ -18,12 +18,16 @@ searchHidden: true
 ShowReadingTime: true
 ShowBreadCrumbs: true
 ShowPostNavLinks: true
-math: false
+math: true
 
 ---
 
-都合よく微分を構成したHeaviside関数の実装については、別記事で紹介しています。（リンクを貼る）
-ここで使っているIFモデルについても、別記事で紹介しています。（リンクを貼る）
+
+都合よく微分を構成したHeaviside関数の実装については、別記事で紹介しています[^1]。
+[^1]: [SNNにおけるHeaviside関数の微分の構成(PyTorch実装) | I'm chizuchizu](https://chizuchizu.com/posts/calc_heaviside/)
+
+ここで使っているIFモデルについても、別記事で紹介しています[^2]。
+[^2]: [SNN寄りなIFモデルの定義とPythonのデモ | I'm chizuchizu](https://chizuchizu.com/posts/define_if/)
 ## IFモデルのPyTorch実装
 IFモデルを実装すると次のようになります。
 
@@ -50,23 +54,22 @@ class IF(torch.nn.Module):
   
         self.threshold = threshold  
   
-    def forward(self, v_previous, vt, s_previous):  
-        x = v_previous * (1 - s_previous) + vt  
+    def forward(self, input_, v_previous, s_previous):  
+        x = v_previous * (1 - s_previous) + input_  
         spikes = Heaviside.apply(x - self.threshold)  
-        return spikes
+        return x, spikes
 ```
 
 ## デモ1. ある時刻だけで動かしてみる。
 ここで、入力$x$と$o$は恒等的に0としています。ある時刻$t$におけるニューロンを40個用意し、膜電位を`arange`で初期化しています。IFモデルは閾値を超えるとスパイクが発火するので、Heaviside関数のグラフのようになることが期待されます。
-
 次のようなコードを書きました。先程書いた`IF`モジュールはPyTorchで動く活性化関数として使えます。
 
 ```python
-v_previous = torch.zeros(int(2 / 0.05), requires_grad=True)  
+input_ = torch.zeros(int(2 / 0.05), requires_grad=True)  
 s_previous = torch.zeros(int(2 / 0.05), requires_grad=True)  
 vt = torch.arange(0, 2, 0.05, requires_grad=True)  
-IF_Layer = IF(threshold=1)  
-o = IF_Layer(v_previous, vt, s_previous)  
+IF_Layer = IF()  
+o = IF_Layer(input_, vt, s_previous)  
 # B = Heaviside.apply(A)  
 print(f"{vt = }")  
 print(f"{o = }")  
@@ -98,3 +101,34 @@ vt.grad = tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.
 `vt`が膜電位にあたるわけですが、今回設定した閾値は1になるので、真ん中あたりからニューロンが発火することが期待されます。出力は、その期待通りに真ん中あたりからニューロンが発火しています。更に、微分係数も0と1になっていることがわかります。ニューロンが発火しなければ勾配は0、 発火すれば1になります。
 
 ## デモ2. 時々刻々と変化させてみる。
+別の記事[^3]で書いたNumPyを使ったシミュレーションと同じことをPyTorchで実装した`IF`モジュールで実現させます。
+[^3]: [SNN寄りなIFモデルの定義とPythonのデモ | I'm chizuchizu](https://chizuchizu.com/posts/define_if/)
+
+次のようなグラフが得られました。
+![](/img/simulate_if_torch.png)
+
+具体的な実装は次のコードで示します。
+
+```python
+n_timesteps = 99  
+v = torch.Tensor([0])  
+if_func = IF(threshold=1)  
+x_input = torch.rand(n_timesteps + 1) / 15  
+v_list = torch.zeros_like(x_input)  
+s_list = torch.zeros_like(x_input)  
+v_list[0] = v.item()  
+
+for t in range(n_timesteps):  
+	v_list[t + 1], s_list[t + 1] = if_func(x_input[t], v_list[t], s_list[t])
+
+plt.plot(v_list)  
+plt.hlines(1, 0, n_timesteps, color="red", linestyles="dotted")  
+plt.xlabel("Timestep")  
+plt.ylabel("Membrane potential")  
+plt.title("Simulation of IF model")  
+plt.show()
+```
+
+時刻0で膜電位が0になるように調整したため、`n_timesteps`が99になってます。
+SNNモデルをPyTorchで構築する際、上で示したコードとほぼ同じ実装でモデル定義をします。
+
